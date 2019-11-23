@@ -123,7 +123,8 @@ class RatingControll: UIStackView {
     
     
     private func updateButtonSelectedSate() {
-        let hingString: String?
+        
+      //  let hingString: String?
         
         for (index, button) in ratingButtons.enumerated() {
             // neu index cua button nho hon rating thi button nen duoc chon

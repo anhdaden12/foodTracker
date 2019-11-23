@@ -24,30 +24,46 @@
                                     <rect key="frame" x="0.0" y="0.0" width="414" height="90"/>
                                     <autoresizingMask key="autoresizingMask"/>
                                     <subviews>
-                                        <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" image="nophoto" translatesAutoresizingMaskIntoConstraints="NO" id="JSB-NY-dDb">
-                                            <rect key="frame" x="0.0" y="0.0" width="108" height="90"/>
-                                            <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                                        </imageView>
-                                        <stackView opaque="NO" userInteractionEnabled="NO" contentMode="scaleToFill" fixedFrame="YES" spacing="8" translatesAutoresizingMaskIntoConstraints="NO" id="nR7-70-BFi" customClass="RatingControll" customModule="FoodTracker" customModuleProvider="target">
-                                            <rect key="frame" x="127" y="40" width="252" height="44"/>
-                                            <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                                            <userDefinedRuntimeAttributes>
-                                                <userDefinedRuntimeAttribute type="size" keyPath="starSize">
-                                                    <size key="value" width="44" height="44"/>
-                                                </userDefinedRuntimeAttribute>
-                                                <userDefinedRuntimeAttribute type="number" keyPath="starCount">
-                                                    <integer key="value" value="5"/>
-                                                </userDefinedRuntimeAttribute>
-                                            </userDefinedRuntimeAttributes>
+                                        <stackView opaque="NO" contentMode="scaleToFill" spacing="10" translatesAutoresizingMaskIntoConstraints="NO" id="jCV-XU-jsc">
+                                            <rect key="frame" x="20" y="11" width="374" height="68"/>
+                                            <subviews>
+                                                <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="nophoto" translatesAutoresizingMaskIntoConstraints="NO" id="JSB-NY-dDb">
+                                                    <rect key="frame" x="0.0" y="0.0" width="68" height="68"/>
+                                                    <constraints>
+                                                        <constraint firstAttribute="width" secondItem="JSB-NY-dDb" secondAttribute="height" id="B1c-uq-chO"/>
+                                                    </constraints>
+                                                </imageView>
+                                                <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" spacing="8" translatesAutoresizingMaskIntoConstraints="NO" id="Lc2-Hb-jt3">
+                                                    <rect key="frame" x="78" y="0.0" width="296" height="68"/>
+                                                    <subviews>
+                                                        <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="1000" verticalHuggingPriority="750" horizontalCompressionResistancePriority="1000" verticalCompressionResistancePriority="1000" text="Label" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="ySJ-aG-eHc">
+                                                            <rect key="frame" x="0.0" y="0.0" width="296" height="20.5"/>
+                                                            <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                                            <nil key="textColor"/>
+                                                            <nil key="highlightedColor"/>
+                                                        </label>
+                                                        <stackView opaque="NO" userInteractionEnabled="NO" contentMode="scaleToFill" distribution="fillEqually" spacing="8" translatesAutoresizingMaskIntoConstraints="NO" id="nR7-70-BFi" customClass="RatingControll" customModule="FoodTracker" customModuleProvider="target">
+                                                            <rect key="frame" x="0.0" y="28.5" width="296" height="39.5"/>
+                                                            <userDefinedRuntimeAttributes>
+                                                                <userDefinedRuntimeAttribute type="size" keyPath="starSize">
+                                                                    <size key="value" width="30" height="30"/>
+                                                                </userDefinedRuntimeAttribute>
+                                                                <userDefinedRuntimeAttribute type="number" keyPath="starCount">
+                                                                    <integer key="value" value="5"/>
+                                                                </userDefinedRuntimeAttribute>
+                                                            </userDefinedRuntimeAttributes>
+                                                        </stackView>
+                                                    </subviews>
+                                                </stackView>
+                                            </subviews>
                                         </stackView>
-                                        <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="Label" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="ySJ-aG-eHc">
-                                            <rect key="frame" x="130" y="11" width="247" height="21"/>
-                                            <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                                            <fontDescription key="fontDescription" type="system" pointSize="17"/>
-                                            <nil key="textColor"/>
-                                            <nil key="highlightedColor"/>
-                                        </label>
                                     </subviews>
+                                    <constraints>
+                                        <constraint firstItem="jCV-XU-jsc" firstAttribute="leading" secondItem="z3T-lw-Qcb" secondAttribute="leadingMargin" id="BcO-ki-RbR"/>
+                                        <constraint firstAttribute="bottomMargin" secondItem="jCV-XU-jsc" secondAttribute="bottom" id="IDX-i3-Jet"/>
+                                        <constraint firstItem="jCV-XU-jsc" firstAttribute="top" secondItem="z3T-lw-Qcb" secondAttribute="topMargin" id="ZhF-UD-Okr"/>
+                                        <constraint firstAttribute="trailingMargin" secondItem="jCV-XU-jsc" secondAttribute="trailing" id="idN-FN-D2r"/>
+                                    </constraints>
                                 </tableViewCellContentView>
                                 <connections>
                                     <outlet property="foodLabelName" destination="ySJ-aG-eHc" id="9MQ-xS-joe"/>
@@ -85,54 +101,76 @@
                         <rect key="frame" x="0.0" y="0.0" width="414" height="896"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
-                            <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" alignment="center" spacing="8" translatesAutoresizingMaskIntoConstraints="NO" id="uYy-J9-eGK">
-                                <rect key="frame" x="20" y="108" width="374" height="442.5"/>
+                            <scrollView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" showsHorizontalScrollIndicator="NO" showsVerticalScrollIndicator="NO" keyboardDismissMode="onDrag" translatesAutoresizingMaskIntoConstraints="NO" id="lql-dn-4nu">
+                                <rect key="frame" x="0.0" y="0.0" width="414" height="896"/>
                                 <subviews>
-                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Meal Name" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="LXp-56-eky">
-                                        <rect key="frame" x="144" y="0.0" width="86.5" height="20.5"/>
-                                        <fontDescription key="fontDescription" type="system" pointSize="17"/>
-                                        <nil key="textColor"/>
-                                        <nil key="highlightedColor"/>
-                                    </label>
-                                    <textField opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" placeholder="Enter meal name" textAlignment="natural" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="qqg-DW-aGP">
-                                        <rect key="frame" x="0.0" y="28.5" width="374" height="34"/>
-                                        <fontDescription key="fontDescription" type="system" pointSize="14"/>
-                                        <textInputTraits key="textInputTraits" returnKeyType="done" enablesReturnKeyAutomatically="YES"/>
-                                    </textField>
-                                    <imageView clipsSubviews="YES" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" placeholderIntrinsicWidth="320" placeholderIntrinsicHeight="320" image="nophoto" translatesAutoresizingMaskIntoConstraints="NO" id="94y-p9-42T">
-                                        <rect key="frame" x="27" y="70.5" width="320" height="320"/>
-                                        <gestureRecognizers/>
+                                    <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" alignment="center" spacing="8" translatesAutoresizingMaskIntoConstraints="NO" id="yLR-jr-uAj" userLabel="Stack Viewcc">
+                                        <rect key="frame" x="0.0" y="0.0" width="414" height="1331.5"/>
+                                        <subviews>
+                                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Meal Name" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="xfM-F8-7bq">
+                                                <rect key="frame" x="164" y="0.0" width="86.5" height="20.5"/>
+                                                <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                                <nil key="textColor"/>
+                                                <nil key="highlightedColor"/>
+                                            </label>
+                                            <textField opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" placeholder="Enter meal name" textAlignment="natural" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="lrZ-Kj-dQF">
+                                                <rect key="frame" x="0.0" y="28.5" width="414" height="34"/>
+                                                <fontDescription key="fontDescription" type="system" pointSize="14"/>
+                                                <textInputTraits key="textInputTraits" returnKeyType="done" enablesReturnKeyAutomatically="YES"/>
+                                            </textField>
+                                            <imageView clipsSubviews="YES" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" placeholderIntrinsicWidth="320" placeholderIntrinsicHeight="320" image="nophoto" translatesAutoresizingMaskIntoConstraints="NO" id="eVJ-MY-8jS">
+                                                <rect key="frame" x="47" y="70.5" width="320" height="320"/>
+                                                <gestureRecognizers/>
+                                                <constraints>
+                                                    <constraint firstAttribute="width" secondItem="eVJ-MY-8jS" secondAttribute="height" multiplier="1:1" id="WWI-fd-TAn"/>
+                                                </constraints>
+                                                <connections>
+                                                    <outletCollection property="gestureRecognizers" destination="N6k-ad-1LK" appends="YES" id="tE1-23-AbH"/>
+                                                </connections>
+                                            </imageView>
+                                            <stackView opaque="NO" contentMode="scaleToFill" spacing="8" translatesAutoresizingMaskIntoConstraints="NO" id="3Th-n2-31b" customClass="RatingControll" customModule="FoodTracker" customModuleProvider="target">
+                                                <rect key="frame" x="81" y="398.5" width="252" height="44"/>
+                                                <userDefinedRuntimeAttributes>
+                                                    <userDefinedRuntimeAttribute type="size" keyPath="starSize">
+                                                        <size key="value" width="44" height="44"/>
+                                                    </userDefinedRuntimeAttribute>
+                                                    <userDefinedRuntimeAttribute type="number" keyPath="starCount">
+                                                        <integer key="value" value="5"/>
+                                                    </userDefinedRuntimeAttribute>
+                                                </userDefinedRuntimeAttributes>
+                                            </stackView>
+                                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" textAlignment="natural" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="HfG-cK-TA6">
+                                                <rect key="frame" x="2.5" y="450.5" width="409" height="881"/>
+                                                <mutableString key="text">UIConstraintBasedLayoutDebugging category on UIView listed in &lt;UIKit/UIView.h&gt; may also be helpful.UIConstraintBasedLayoutDebugging category on UIView listed in &lt;UIKit/UIView.h&gt; may also be helpful.UIConstraintBasedLayoutDebugging category on UIView listed in &lt;UIKit/UIView.h&gt; may also be helpful.UIConstraintBasedLayoutDebugging category on UIView listed in &lt;UIKit/UIView.h&gt; may also be helpful.UIConstraintBasedLayoutDebugging category on UIView listed in &lt;UIKit/UIView.h&gt; may also be helpful.UIConstraintBasedLayoutDebugging category on UIView listed in &lt;UIKit/UIView.h&gt; may also be helpful.UIConstraintBasedLayoutDebugging category on UIView listed in &lt;UIKit/UIView.h&gt; may also be helpful.UIConstraintBasedLayoutDebugging category on UIView listed in &lt;UIKit/UIView.h&gt; may also be helpful.UIConstraintBasedLayoutDebugging category on UIView listed in &lt;UIKit/UIView.h&gt; may also be helpful.UIConstraintBasedLayoutDebugging category on UIView listed in &lt;UIKit/UIView.h&gt; may also be helpful.UIConstraintBasedLayoutDebugging category on UIView listed in &lt;UIKit/UIView.h&gt; may also be helpful.UIConstraintBasedLayoutDebugging category on UIView listed in &lt;UIKit/UIView.h&gt; may also be helpful.UIConstraintBasedLayoutDebugging category on UIView listed in &lt;UIKit/UIView.h&gt; may also be helpful.UIConstraintBasedLayoutDebugging category on UIView listed in &lt;UIKit/UIView.h&gt; may also be helpful.</mutableString>
+                                                <fontDescription key="fontDescription" type="system" pointSize="18"/>
+                                                <nil key="textColor"/>
+                                                <nil key="highlightedColor"/>
+                                            </label>
+                                        </subviews>
                                         <constraints>
-                                            <constraint firstAttribute="width" secondItem="94y-p9-42T" secondAttribute="height" multiplier="1:1" id="evA-FR-vOV"/>
+                                            <constraint firstAttribute="trailing" secondItem="lrZ-Kj-dQF" secondAttribute="trailing" id="6XN-Me-sAy"/>
                                         </constraints>
-                                        <connections>
-                                            <outletCollection property="gestureRecognizers" destination="4jH-Sf-lM7" appends="YES" id="h2K-vM-UxY"/>
-                                        </connections>
-                                    </imageView>
-                                    <stackView opaque="NO" contentMode="scaleToFill" spacing="8" translatesAutoresizingMaskIntoConstraints="NO" id="mTg-Xh-Lf1" customClass="RatingControll" customModule="FoodTracker" customModuleProvider="target">
-                                        <rect key="frame" x="61" y="398.5" width="252" height="44"/>
-                                        <userDefinedRuntimeAttributes>
-                                            <userDefinedRuntimeAttribute type="size" keyPath="starSize">
-                                                <size key="value" width="44" height="44"/>
-                                            </userDefinedRuntimeAttribute>
-                                            <userDefinedRuntimeAttribute type="number" keyPath="starCount">
-                                                <integer key="value" value="5"/>
-                                            </userDefinedRuntimeAttribute>
-                                        </userDefinedRuntimeAttributes>
                                     </stackView>
                                 </subviews>
                                 <constraints>
-                                    <constraint firstAttribute="trailing" secondItem="qqg-DW-aGP" secondAttribute="trailing" id="ASF-zW-0FK"/>
+                                    <constraint firstItem="yLR-jr-uAj" firstAttribute="width" secondItem="lql-dn-4nu" secondAttribute="width" id="3S3-41-iOq"/>
+                                    <constraint firstItem="yLR-jr-uAj" firstAttribute="bottom" secondItem="lql-dn-4nu" secondAttribute="bottom" id="5ep-QV-S8J"/>
+                                    <constraint firstAttribute="leading" secondItem="yLR-jr-uAj" secondAttribute="leading" id="fs7-JC-HNy"/>
+                                    <constraint firstItem="yLR-jr-uAj" firstAttribute="trailing" secondItem="lql-dn-4nu" secondAttribute="trailing" id="qXa-lO-PY5"/>
+                                    <constraint firstItem="yLR-jr-uAj" firstAttribute="top" secondItem="lql-dn-4nu" secondAttribute="top" id="ydq-Mj-QeZ"/>
                                 </constraints>
-                            </stackView>
+                                <viewLayoutGuide key="contentLayoutGuide" id="0R2-cA-Q3A"/>
+                                <viewLayoutGuide key="frameLayoutGuide" id="KOA-Hu-3j9"/>
+                            </scrollView>
                         </subviews>
                         <color key="backgroundColor" systemColor="systemBackgroundColor" cocoaTouchSystemColor="whiteColor"/>
                         <constraints>
-                            <constraint firstAttribute="trailingMargin" secondItem="uYy-J9-eGK" secondAttribute="trailing" id="1wV-iK-S0y"/>
-                            <constraint firstItem="uYy-J9-eGK" firstAttribute="leading" secondItem="8bC-Xf-vdC" secondAttribute="leadingMargin" id="c8w-7J-8mc"/>
-                            <constraint firstItem="uYy-J9-eGK" firstAttribute="top" secondItem="6Tk-OE-BBY" secondAttribute="top" constant="20" id="fe5-rq-ndv"/>
+                            <constraint firstAttribute="trailing" secondItem="lql-dn-4nu" secondAttribute="trailing" id="GtY-Gy-GRA"/>
+                            <constraint firstItem="lql-dn-4nu" firstAttribute="leading" secondItem="8bC-Xf-vdC" secondAttribute="leading" id="dC8-bM-op5"/>
+                            <constraint firstAttribute="bottom" secondItem="lql-dn-4nu" secondAttribute="bottom" id="f3G-j3-cnm"/>
+                            <constraint firstItem="lql-dn-4nu" firstAttribute="top" secondItem="8bC-Xf-vdC" secondAttribute="top" id="m2A-bi-RDv"/>
                         </constraints>
-                        <viewLayoutGuide key="safeArea" id="6Tk-OE-BBY"/>
+                        <viewLayoutGuide key="safeArea" id="0hM-ok-CSZ"/>
                     </view>
                     <navigationItem key="navigationItem" title="New Meal" id="yKy-J0-Lan">
                         <barButtonItem key="leftBarButtonItem" title="Cancel" id="zma-Nc-YI5">
@@ -147,21 +185,21 @@
                         </barButtonItem>
                     </navigationItem>
                     <connections>
-                        <outlet property="imageFood" destination="94y-p9-42T" id="tIJ-kc-NN7"/>
-                        <outlet property="ratingControl" destination="mTg-Xh-Lf1" id="OzF-dm-CEf"/>
+                        <outlet property="imageFood" destination="eVJ-MY-8jS" id="BpW-Ei-UVk"/>
+                        <outlet property="ratingControl" destination="3Th-n2-31b" id="ouK-B8-YSf"/>
                         <outlet property="saveButtonItem" destination="4OC-1P-Bmn" id="Ei0-rg-lbo"/>
-                        <outlet property="textField" destination="qqg-DW-aGP" id="HbS-oH-qAe"/>
+                        <outlet property="textField" destination="lrZ-Kj-dQF" id="HiA-ej-S54"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="dkx-z0-nzr" sceneMemberID="firstResponder"/>
                 <exit id="TZ4-9J-1ea" userLabel="Exit" sceneMemberID="exit"/>
-                <tapGestureRecognizer id="4jH-Sf-lM7">
+                <tapGestureRecognizer id="N6k-ad-1LK">
                     <connections>
-                        <action selector="onClickImage:" destination="BYZ-38-t0r" id="NkH-tX-Nfj"/>
+                        <action selector="onClickImage:" destination="BYZ-38-t0r" id="8y1-CL-vrr"/>
                     </connections>
                 </tapGestureRecognizer>
             </objects>
-            <point key="canvasLocation" x="1858" y="98"/>
+            <point key="canvasLocation" x="1857.9710144927537" y="97.767857142857139"/>
         </scene>
         <!--Navigation Controller-->
         <scene sceneID="0nr-Ml-hq0">
