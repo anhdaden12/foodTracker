@@ -13,6 +13,7 @@ class MealTableViewCell: UITableViewCell {
     
     @IBOutlet weak var imageFood: UIImageView!
     @IBOutlet weak var foodLabelName: UILabel!
+    @IBOutlet weak var foodDescription: UILabel!
     @IBOutlet weak var ratingControl: RatingControll!
     
     

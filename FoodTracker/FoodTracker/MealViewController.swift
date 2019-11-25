@@ -7,20 +7,29 @@
 //
 
 import UIKit
-import os.log
+import RealmSwift
 
 
 class MealViewController: UIViewController{
 
+    let realm = try! Realm()
    
     @IBOutlet weak var textField: UITextField!
     @IBOutlet weak var imageFood: UIImageView!
     
     @IBOutlet weak var ratingControl: RatingControll!
     
+    @IBOutlet weak var textView: UITextView! {
+        didSet {
+            if textView.text.isEmpty {
+                textView.text = "Add description here"
+                textView.textColor = .gray
+            }
+        }
+    }
      @IBOutlet weak var saveButtonItem: UIBarButtonItem!
     
-     var meal: Meal?
+     var meal: Food?
     override func viewDidLoad() {
         super.viewDidLoad()
         textField.delegate = self
@@ -31,26 +40,60 @@ class MealViewController: UIViewController{
         if let meal = meal {
             navigationItem.title = meal.name
             textField.text = meal.name
-            imageFood.image = meal.photo
+            imageFood.image = UIImage(data: meal.photo)
             ratingControl.rating = meal.rating
+            textView.text = meal.descrip
         }
+        
+       adjustUITextViewHeight(arg: textView)
+        
+    
     }
+    
+ func adjustUITextViewHeight(arg : UITextView)
+ {
+    // arg.translatesAutoresizingMaskIntoConstraints = true
+     arg.sizeToFit()
+     arg.isScrollEnabled = false
+ }
 
     
     //mark: navigation
-    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
-        super.prepare(for: segue, sender: sender)
-        guard let button = sender as? UIBarButtonItem, button === saveButtonItem else {
-              os_log("The save button was not pressed, cancelling", log: OSLog.default, type: .debug)
-              return
-        }
-        
+ 
+    @IBAction func onClickAdd(_ sender: Any) {
         let name = textField.text ?? ""
-        let photo = imageFood.image
+        guard let photo = imageFood.image else { return }
         let rating = ratingControl.rating
-        
-        meal = Meal(name: name, photo: photo, rating: rating)
+        let description = textView.text ?? ""
+        let addfood = Food(name: name, photo: data(image: photo), rating: rating, descrip: description)
+        if meal != nil {
+            try! realm.write {
+                realm.add(addfood, update: .modified)
+            }
+        } else {
+            
+            try! realm.write {
+                realm.add(addfood)
+            }
+        }
+        dismiss(animated: true, completion: nil)
     }
+       
+    
+    
+    func data(image: UIImage) -> Data {
+        var imageData = image.pngData()
+    // Resize the image if it exceeds the 2MB API limit
+     if (imageData?.count)! > 2097152 {
+        //let oldSize = image.size
+        //let newSize = CGSize(width: 800, height: oldSize.height / oldSize.width * 800)
+//        (width: 800, height: oldSize.height / oldSize.width *
+//        800)
+        guard let newImage = image.resize(withWidth: 800) else { return Data()}
+        imageData = newImage.jpegData(compressionQuality: 0.7)
+       }
+       return imageData!
+     }
   
     
     @IBAction func onClickImage(_ sender: UITapGestureRecognizer) {
@@ -136,5 +179,21 @@ extension MealViewController: UIImagePickerControllerDelegate,  UINavigationCont
         imageFood.image = selectedImage
         //dismis vc
         dismiss(animated: true, completion: nil)
+    }
+}
+
+
+extension UIImage {
+
+    func resize(withWidth newWidth: CGFloat) -> UIImage? {
+
+        let scale = newWidth / self.size.width
+        let newHeight = self.size.height * scale
+        UIGraphicsBeginImageContext(CGSize(width: newWidth, height: newHeight))
+        self.draw(in: CGRect(x: 0, y: 0, width: newWidth, height: newHeight))
+        let newImage = UIGraphicsGetImageFromCurrentImageContext()
+        UIGraphicsEndImageContext()
+
+        return newImage
     }
 }

@@ -8,48 +8,84 @@
 
 import UIKit
 import os.log
+import RealmSwift
 
 class MealTableViewController: UITableViewController {
 
     @IBOutlet weak var addButton: UIBarButtonItem!
-    
-    var meals = [Meal]()
+
+    let realm = try! Realm()
+    var dataFood: Results<Food> {
+        get {
+            return realm.objects(Food.self)
+        }
+    }
+
+   // var meals = [Meal]()
     
     override func viewDidLoad() {
         super.viewDidLoad()
         navigationItem.leftBarButtonItem = editButtonItem
         
-        loadSimpleMeals()
+        
+     
+    }
+    
+    override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(animated)
+        tableView.reloadData()
     }
 
     
     private func loadSimpleMeals() {
-        let photo1 = UIImage(named: "1")
-        let photo2 = UIImage(named: "2")
-        let photo3 = UIImage(named: "3")
-        let photo4 = UIImage(named: "4")
-        let photo5 = UIImage(named: "5")
-        
-        
-        guard let meal1 = Meal(name: "Capresalad", photo: photo1, rating: 4) else {
-            fatalError("Unable to instantiate meal1")
+        guard let photo1 = UIImage(named: "1") else { return }
+        guard let photo2 = UIImage(named: "2") else { return }
+        guard let photo3 = UIImage(named: "3") else { return }
+        guard let photo4 = UIImage(named: "4") else { return }
+        guard let photo5 = UIImage(named: "5") else { return }
+
+
+        let fake1 = Food(name: "Salad", photo: photo1.pngData()!, rating: 5, descrip: "A food that has been introduced to bacteria, yeast, or another microorganism to produce organic acids, alcohols, or gases. May result in a pungent, biting flavor.")
+
+        let fake2 = Food(name: "Suhao", photo: photo2.pngData()!, rating: 4, descrip: "A food that was dipped in butter and coated with spices before being cooked in a hot pan, resulting in a blackened appearance.")
+
+        let fake3 = Food(name: "Bapcai", photo: photo3.pngData()!, rating: 2, descrip: "A food cooked with intense radiant heat, as in an oven or on a grill. Often results in a darkened appearance and crispy texture.")
+
+        let fake4 = Food(name: "HeoQUay", photo: photo4.pngData()!, rating: 3, descrip: "A food that has been introduced to bacteria, yeast, or another microorganism to produce organic acids, alcohols, or gases. May result in a pungent, biting flavor.")
+
+        let fake5 = Food(name: "GaRan", photo: photo5.pngData()!, rating: 4, descrip: "A food that becomes moistened by having a flavorful coating dripped or brushed onto its surface. May result in a glossy appearance and thin, crisp outer layer.")
+
+        let fake6 = Food(name: "Hotdog", photo: photo1.pngData()!, rating: 5, descrip: "Food that has been cooked with dry heat in an oven or over a fire. Often results in a browned exterior and crisp coating.")
+
+        let dataA: [Food] = [fake1, fake2, fake3, fake4, fake5,fake6]
+
+
+            try! realm.write {
+                for item in dataA {
+                    realm.add(item)
+                }
+            }
+
+
+    }
+    
+    
+    
+    @IBAction func fakeData(_ sender: Any) {
+        DispatchQueue.global(qos: .userInteractive).async {
+            DispatchQueue.main.async {
+                self.loadSimpleMeals()
+                self.tableView.reloadData()
+            }
         }
-        guard let meal2 = Meal(name: "Guaguu beef", photo: photo2, rating: 3) else{
-            fatalError("Unable to instantiate meal2")
+    }
+    
+    
+    @IBAction func deleteAll(_ sender: Any) {
+        try! realm.write {
+            realm.deleteAll()
         }
-        guard let meal3 = Meal(name: "Potaotose", photo: photo3, rating: 5) else {
-            fatalError("Unable to instantiate meal3")
-        }
-        guard let meal4 = Meal(name: "Pho VN", photo: photo4, rating: 4) else {
-            fatalError("Unable to instantiate meal4")
-        }
-        guard let meal5 = Meal(name: "Young Buffalow", photo: photo5, rating: 3) else {
-                fatalError("Unable to instantiate meal5")
-        }
-        
-        meals += [meal1, meal2,meal3,meal4, meal5]
-        
-        
+        tableView.reloadData()
     }
     
    
@@ -61,22 +97,29 @@ class MealTableViewController: UITableViewController {
     
     
     override func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return meals.count
+        return dataFood.count
     }
     
     
     override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCell(withIdentifier: "cell", for: indexPath) as! MealTableViewCell
-        cell.imageFood.image = meals[indexPath.row].photo
-        cell.foodLabelName.text = meals[indexPath.row].name
-        cell.ratingControl.rating = meals[indexPath.row].rating
+        let food = dataFood[indexPath.row]
+        cell.imageFood.image = UIImage(data: food.photo)
+        cell.foodLabelName.text = food.name
+        cell.ratingControl.rating = food.rating
+        cell.foodDescription.text = food.descrip
+        
+        cell.imageFood.layer.cornerRadius = 64.5
+        cell.imageFood.layer.masksToBounds = true
         return cell
     }
     
     
     override func tableView(_ tableView: UITableView, commit editingStyle: UITableViewCell.EditingStyle, forRowAt indexPath: IndexPath) {
         if editingStyle == .delete {
-            meals.remove(at: indexPath.row)
+           try! realm.write {
+            realm.delete(dataFood[indexPath.row])
+            }
             tableView.deleteRows(at: [indexPath], with: .fade)
         } else if editingStyle == .insert {
             
@@ -91,6 +134,7 @@ class MealTableViewController: UITableViewController {
     override func setEditing(_ editing: Bool, animated: Bool) {
         super.setEditing(editing, animated: true)
         addButton.isEnabled = !isEditing
+        
     }
     
     override func shouldPerformSegue(withIdentifier identifier: String, sender: Any?) -> Bool {
@@ -112,7 +156,7 @@ class MealTableViewController: UITableViewController {
                 fatalError("unecpected segue destination: \(segue.destination)")
             }
             if let index = tableView.indexPathForSelectedRow {
-                mealVC.meal = meals[index.row]
+                mealVC.meal = dataFood[index.row]
             }
         default:
             break
@@ -123,20 +167,26 @@ class MealTableViewController: UITableViewController {
     
 //mark : action
     
-    @IBAction func unwind(for unwindSegue: UIStoryboardSegue) {
-        if let soureVC = unwindSegue.source as? MealViewController, let meal = soureVC.meal {
-            
-            if let indexPat = tableView.indexPathForSelectedRow {
-                meals[indexPat.row] = meal
-            } else {
-                let newindexPath = IndexPath(row: meals.count, section: 0)
-                meals.append(meal)
-                tableView.insertRows(at: [newindexPath], with: .automatic)
-            }
-            
-            tableView.reloadData()
-        } 
-    }
+//    @IBAction func unwind(for unwindSegue: UIStoryboardSegue) {
+//        if let soureVC = unwindSegue.source as? MealViewController, let meal = soureVC.meal {
+//
+//            if let _ = tableView.indexPathForSelectedRow {
+//                //dataFood[indexPat.row] = meal
+//                try! realm.write {
+//                    realm.add(meal, update: .modified)
+//                }
+//            } else {
+//              //  let newindexPath = IndexPath(row: meals.count, section: 0)
+//                //dataFood.insert(meal, at: 0)
+//                try! realm.write {
+//                    realm.add(meal)
+//                }
+//               // tableView.insertRows(at: [newindexPath], with: .automatic)
+//            }
+//
+//            tableView.reloadData()
+//        }
+//    }
    
 
 }
